@@ -1,5 +1,11 @@
+const app = document.querySelector('#app')
+
 const div1 = document.createElement('div')
 div1.innerHTML = '1'
+const view1 = document.createElement('div')
+view1.style.height = '50px'
+view1.style.background = 'red'
+div1.appendChild(view1)
 const div2 = document.createElement('div')
 div2.innerHTML = '2'
 const div3 = document.createElement('div')
@@ -13,7 +19,7 @@ const routeTable = {
   '4': div4
 }
 
-function route(){
+function route(container){
   let number = window.location.hash.substr(1);
   let app = document.querySelector("#app");
 
@@ -25,14 +31,14 @@ function route(){
   }
   div.style.display = "block";
 
-  app.innerHTML = ''
-  app.appendChild(div);
+  container.innerHTML = ''
+  container.appendChild(div);
 }
 
-route()
+route(app)
 
 window.addEventListener("hashchange", () => {
   console.log("hash 变了");
 
-  route()
+  route(app)
 });

@@ -118,8 +118,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+var app = document.querySelector('#app');
 var div1 = document.createElement('div');
 div1.innerHTML = '1';
+var view1 = document.createElement('div');
+view1.style.height = '50px';
+view1.style.background = 'red';
+div1.appendChild(view1);
 var div2 = document.createElement('div');
 div2.innerHTML = '2';
 var div3 = document.createElement('div');
@@ -133,7 +138,7 @@ var routeTable = {
   '4': div4
 };
 
-function route() {
+function route(container) {
   var number = window.location.hash.substr(1);
   var app = document.querySelector("#app");
   number = number || 1; // 保底值，默认路由
@@ -145,14 +150,14 @@ function route() {
   }
 
   div.style.display = "block";
-  app.innerHTML = '';
-  app.appendChild(div);
+  container.innerHTML = '';
+  container.appendChild(div);
 }
 
-route();
+route(app);
 window.addEventListener("hashchange", function () {
   console.log("hash 变了");
-  route();
+  route(app);
 });
 },{}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
