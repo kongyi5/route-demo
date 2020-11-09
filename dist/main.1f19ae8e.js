@@ -118,13 +118,20 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var app = document.querySelector('#app');
 var div1 = document.createElement('div');
-div1.innerHTML = '1';
-var view1 = document.createElement('div');
-view1.style.height = '50px';
-view1.style.background = 'red';
-div1.appendChild(view1);
+div1.innerHTML = '1'; // 嵌套路由
+// const view1 = document.createElement('div')
+// view1.style.height = '50px'
+// view1.style.background = 'red'
+// div1.appendChild(view1)
+
 var div2 = document.createElement('div');
 div2.innerHTML = '2';
 var div3 = document.createElement('div');
@@ -132,15 +139,15 @@ div3.innerHTML = '3';
 var div4 = document.createElement('div');
 div4.innerHTML = '4';
 var routeTable = {
-  '1': div1,
-  '2': div2,
-  '3': div3,
-  '4': div4
+  '/1': div1,
+  '/2': div2,
+  '/3': div3,
+  '/4': div4
 };
 
 function route(container) {
-  var number = window.location.hash.substr(1);
-  var app = document.querySelector("#app");
+  var number = window.location.pathname;
+  console.log('number: ' + number);
   number = number || 1; // 保底值，默认路由
 
   var div = routeTable[number.toString()];
@@ -154,11 +161,37 @@ function route(container) {
   container.appendChild(div);
 }
 
+var allA = document.querySelectorAll('a.link');
+
+var _iterator = _createForOfIteratorHelper(allA),
+    _step;
+
+try {
+  var _loop = function _loop() {
+    var a = _step.value;
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = a.getAttribute('href');
+      window.history.pushState(null, "page ".concat(href), href);
+      onStateChange(href);
+    });
+  };
+
+  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+    _loop();
+  }
+} catch (err) {
+  _iterator.e(err);
+} finally {
+  _iterator.f();
+}
+
 route(app);
-window.addEventListener("hashchange", function () {
-  console.log("hash 变了");
+
+function onStateChange() {
+  console.log("state 变了");
   route(app);
-});
+}
 },{}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -187,7 +220,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60799" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50141" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
