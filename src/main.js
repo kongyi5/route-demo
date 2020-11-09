@@ -21,11 +21,10 @@ const routeTable = {
 }
 
 function route(container){
-  let number = window.location.pathname
-  console.log('number: ' + number)
-
-  number = number || 1; // 保底值，默认路由
-
+  let number = window.localStorage.getItem('xxx')
+  if(!number){
+  number = '/1'
+  }
   let div = routeTable[number.toString()]
   if (!div) {
     div = document.querySelector("#div404");
@@ -42,6 +41,8 @@ for(let a of allA){
     e.preventDefault()
     let href = a.getAttribute('href')
     window.history.pushState(null, `page ${href}`, href)
+    window.localStorage.setItem('xxx', href)
+    // 通知
     onStateChange(href)
   })
 }

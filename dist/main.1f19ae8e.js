@@ -146,9 +146,11 @@ var routeTable = {
 };
 
 function route(container) {
-  var number = window.location.pathname;
-  console.log('number: ' + number);
-  number = number || 1; // 保底值，默认路由
+  var number = window.localStorage.getItem('xxx');
+
+  if (!number) {
+    number = '/1';
+  }
 
   var div = routeTable[number.toString()];
 
@@ -173,6 +175,8 @@ try {
       e.preventDefault();
       var href = a.getAttribute('href');
       window.history.pushState(null, "page ".concat(href), href);
+      window.localStorage.setItem('xxx', href); // 通知
+
       onStateChange(href);
     });
   };
